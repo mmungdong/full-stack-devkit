@@ -1,0 +1,8 @@
+module github.com/mungdong/devkit
+
+require (
+    gorm.io/plugin/dbresolver v1.6.2
+    github.com/onexstack/onexstack v0.3.27
+)
+
+replace google.golang.org/grpc => google.golang.org/grpc v1.64.0 // To compatible with polarismesh/grpc-go-polaris

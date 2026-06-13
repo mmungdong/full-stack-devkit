@@ -1,0 +1,19 @@
+scaffold: onex
+version: v1
+metadata:
+  modulePath: github.com/mungdong/devkit
+  author: "mungdong"
+  email: mungdong@example.com
+  deploymentMethod: docker
+  makefileMode: structured
+  image:
+    registryPrefix: docker.io/mungdong
+    dockerfileMode: combined
+    distrolessMode: auto
+webServers:
+  - binaryName: dk-apiserver
+    webFramework: gin
+    storageType: mariadb
+    withHealthz: true
+    withUser: true
+    withOTel: true
