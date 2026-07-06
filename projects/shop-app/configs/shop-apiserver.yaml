@@ -1,0 +1,16 @@
+
+jwt-key: xxxxxxxxxxxx
+addr: 0.0.0.0:5555 # 服务监听地址
+timeout: 30s # 服务端超时
+mysql:
+  addr: 127.0.0.1:3306 # MySQL 的访问地址
+  username: admin # MySQL 用户名
+  password: "123456" # MySQL 密码
+  database: shop-app # MySQL 数据库名
+  max-connection-life-time: 10s # 单个数据库连接的最大存活时间，超过这个时间，连接会被关闭并重建
+  max-idle-connections: 100 # 连接池中允许空闲连接的最大数量
+  max-open-connections: 100 # 连接池中允许同时打开的最大连接数（包括正在用的和空闲的）
+
+# i18n 国际化配置
+i18n:
+  defaultLanguage: zh # 默认语言（zh/en）

@@ -1,0 +1,49 @@
+{
+  "login": {
+    "title": "Login Shop App",
+    "subtitle": "Sign in to your account",
+    "username": "Username",
+    "password": "Password",
+    "submit": "Login",
+    "submitting": "Logging in...",
+    "register": "No account yet?",
+    "registerLink": "Register",
+    "forgotPassword": "Forgot password?",
+    "socialLogin": "Third-party login"
+  },
+  "register": {
+    "title": "Register",
+    "username": "Username",
+    "password": "Password",
+    "nickname": "Nickname",
+    "email": "Email",
+    "phone": "Phone",
+    "submit": "Register",
+    "submitting": "Registering...",
+    "login": "Already have an account?",
+    "loginLink": "Login"
+  },
+  "validation": {
+    "usernameMin": "Username must be at least 3 characters",
+    "passwordMin": "Password must be at least 8 characters",
+    "nicknameRequired": "Nickname is required",
+    "emailInvalid": "Invalid email format",
+    "phoneRequired": "Phone is required",
+    "phoneInvalid": "Invalid phone format"
+  },
+  "error": {
+    "loginFailed": "Login failed",
+    "registerFailed": "Registration failed",
+    "inputInvalid": "Invalid input",
+    "comingSoon": "Coming soon"
+  },
+  "home": {
+    "welcome": "Welcome, {{name}}",
+    "loginSuccess": "Login successful. This is the home placeholder.",
+    "logout": "Logout"
+  },
+  "language": {
+    "zh": "中文",
+    "en": "English"
+  }
+}

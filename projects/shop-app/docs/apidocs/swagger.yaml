@@ -1,0 +1,412 @@
+basePath: /api
+definitions:
+  github_com_onexstack_shop-app_pkg_api_apiserver_v1.ServiceStatus:
+    enum:
+    - 0
+    - 1
+    format: int32
+    type: integer
+    x-enum-varnames:
+    - ServiceStatus_Healthy
+    - ServiceStatus_Unhealthy
+  handler.ConfigResponse:
+    properties:
+      defaultLanguage:
+        description: DefaultLanguage 默认语言.
+        type: string
+    type: object
+  timestamppb.Timestamp:
+    properties:
+      nanos:
+        description: |-
+          Non-negative fractions of a second at nanosecond resolution. This field is
+          the nanosecond portion of the duration, not an alternative to seconds.
+          Negative second values with fractions must still have non-negative nanos
+          values that count forward in time. Must be between 0 and 999,999,999
+          inclusive.
+        type: integer
+      seconds:
+        description: |-
+          Represents seconds of UTC time since Unix epoch 1970-01-01T00:00:00Z. Must
+          be between -315576000000 and 315576000000 inclusive (which corresponds to
+          0001-01-01T00:00:00Z to 9999-12-31T23:59:59Z).
+        type: integer
+    type: object
+  v1.ChangePasswordRequest:
+    properties:
+      newPassword:
+        description: newPassword 表示准备修改的新密码
+        type: string
+      oldPassword:
+        description: oldPassword 表示当前密码
+        type: string
+      userID:
+        description: userID 表示用户 ID
+        type: string
+    type: object
+  v1.ChangePasswordResponse:
+    type: object
+  v1.CreateUserRequest:
+    properties:
+      email:
+        description: email 表示用户电子邮箱
+        type: string
+      nickname:
+        description: nickname 表示用户昵称
+        type: string
+      password:
+        description: password 表示用户密码
+        type: string
+      phone:
+        description: phone 表示用户手机号
+        type: string
+      username:
+        description: username 表示用户名称
+        type: string
+    type: object
+  v1.CreateUserResponse:
+    properties:
+      userID:
+        description: userID 表示新创建的用户 ID
+        type: string
+    type: object
+  v1.DeleteUserResponse:
+    type: object
+  v1.GetUserResponse:
+    properties:
+      user:
+        allOf:
+        - $ref: '#/definitions/v1.User'
+        description: user 表示返回的用户信息
+    type: object
+  v1.HealthzResponse:
+    properties:
+      message:
+        description: |-
+          message represents an optional status message, providing additional
+          information about the service's health.
+        type: string
+      status:
+        allOf:
+        - $ref: '#/definitions/github_com_onexstack_shop-app_pkg_api_apiserver_v1.ServiceStatus'
+        description: status represents the health status of the service.
+      timestamp:
+        description: timestamp represents the timestamp of the request.
+        type: string
+    type: object
+  v1.ListUserResponse:
+    properties:
+      totalCount:
+        description: totalCount 表示总用户数
+        type: integer
+      users:
+        description: users 表示用户列表
+        items:
+          $ref: '#/definitions/v1.User'
+        type: array
+    type: object
+  v1.LoginRequest:
+    properties:
+      password:
+        description: password 表示用户密码
+        type: string
+      username:
+        description: username 表示用户名称
+        type: string
+    type: object
+  v1.LoginResponse:
+    properties:
+      expireAt:
+        allOf:
+        - $ref: '#/definitions/timestamppb.Timestamp'
+        description: expireAt 表示该 token 的过期时间
+      token:
+        description: token 表示返回的身份验证令牌
+        type: string
+    type: object
+  v1.RefreshTokenResponse:
+    properties:
+      expireAt:
+        allOf:
+        - $ref: '#/definitions/timestamppb.Timestamp'
+        description: expireAt 表示该 token 的过期时间
+      token:
+        description: token 表示返回的身份验证令牌
+        type: string
+    type: object
+  v1.UpdateUserRequest:
+    properties:
+      email:
+        description: email 表示可选的用户电子邮箱
+        type: string
+      nickname:
+        description: nickname 表示可选的用户昵称
+        type: string
+      phone:
+        description: phone 表示可选的用户手机号
+        type: string
+      userID:
+        description: userID 表示用户 ID
+        type: string
+      username:
+        description: username 表示可选的用户名称
+        type: string
+    type: object
+  v1.UpdateUserResponse:
+    type: object
+  v1.User:
+    properties:
+      createdAt:
+        allOf:
+        - $ref: '#/definitions/timestamppb.Timestamp'
+        description: createdAt 表示用户注册时间
+      email:
+        description: email 表示用户电子邮箱
+        type: string
+      nickname:
+        description: nickname 表示用户昵称
+        type: string
+      phone:
+        description: phone 表示用户手机号
+        type: string
+      postCount:
+        description: postCount 表示用户拥有的博客数量
+        type: integer
+      updatedAt:
+        allOf:
+        - $ref: '#/definitions/timestamppb.Timestamp'
+        description: updatedAt 表示用户最后更新时间
+      userID:
+        description: userID 表示用户 ID
+        type: string
+      username:
+        description: username 表示用户名称
+        type: string
+    type: object
+host: localhost:5555
+info:
+  contact:
+    name: mungdong
+  description: 基于 OneX 技术栈的电商后端服务，提供用户登录注册等功能。
+  license:
+    name: MIT
+  title: Shop App API
+  version: "1.0"
+paths:
+  /api/config:
+    get:
+      description: 返回前端可用的全局配置（如默认语言）
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.ConfigResponse'
+      summary: 获取全局配置
+      tags:
+      - 系统
+  /api/healthz:
+    get:
+      description: 探测服务是否存活
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/v1.HealthzResponse'
+      summary: 健康检查
+      tags:
+      - 系统
+  /api/login:
+    post:
+      consumes:
+      - application/json
+      description: 通过用户名密码登录，返回 JWT Token
+      parameters:
+      - description: 登录请求
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/v1.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/v1.LoginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/v1.LoginResponse'
+      summary: 用户登录
+      tags:
+      - 认证
+  /api/refresh-token:
+    put:
+      consumes:
+      - application/json
+      description: 使用当前有效的 Token 刷新获取新 Token
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/v1.RefreshTokenResponse'
+      summary: 刷新令牌
+      tags:
+      - 认证
+  /api/v1/users:
+    get:
+      consumes:
+      - application/json
+      description: 分页查询用户列表
+      parameters:
+      - default: 0
+        description: 偏移量
+        format: int64
+        in: query
+        name: offset
+        type: integer
+      - default: 10
+        description: 每页数量
+        format: int64
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/v1.ListUserResponse'
+      summary: 查询用户列表
+      tags:
+      - 用户
+    post:
+      consumes:
+      - application/json
+      description: 创建新用户（注册），无需认证
+      parameters:
+      - description: 用户信息
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/v1.CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/v1.CreateUserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/v1.CreateUserResponse'
+      summary: 注册用户
+      tags:
+      - 用户
+  /api/v1/users/{userID}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除指定用户
+      parameters:
+      - description: 用户 ID
+        in: path
+        name: userID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/v1.DeleteUserResponse'
+      summary: 删除用户
+      tags:
+      - 用户
+    get:
+      consumes:
+      - application/json
+      description: 获取指定用户的详细信息
+      parameters:
+      - description: 用户 ID
+        in: path
+        name: userID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/v1.GetUserResponse'
+      summary: 查询用户详情
+      tags:
+      - 用户
+    put:
+      consumes:
+      - application/json
+      description: 更新指定用户的信息
+      parameters:
+      - description: 用户 ID
+        in: path
+        name: userID
+        required: true
+        type: string
+      - description: 更新用户请求
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/v1.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/v1.UpdateUserResponse'
+      summary: 更新用户
+      tags:
+      - 用户
+  /api/v1/users/{userID}/change-password:
+    put:
+      consumes:
+      - application/json
+      description: 修改指定用户的密码
+      parameters:
+      - description: 用户 ID
+        in: path
+        name: userID
+        required: true
+        type: string
+      - description: 修改密码请求
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/v1.ChangePasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/v1.ChangePasswordResponse'
+      summary: 修改密码
+      tags:
+      - 用户
+schemes:
+- http
+swagger: "2.0"

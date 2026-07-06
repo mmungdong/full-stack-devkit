@@ -1,0 +1,40 @@
+.switcher {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 100;
+  display: flex;
+  gap: 8px;
+  background: rgba(20, 20, 33, 0.8);
+  border: 1px solid #2e2e4c;
+  border-radius: 20px;
+  padding: 6px 10px;
+  box-shadow: 3px 9px 16px rgb(0, 0, 0, 0.4);
+}
+
+.langBtn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.41);
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  border-radius: 12px;
+  transition: all 0.3s;
+}
+
+.langBtn:hover {
+  color: #00ffaaed;
+}
+
+.active {
+  color: #00ffaaed;
+  background: rgba(0, 255, 170, 0.1);
+}
+
+@media (min-width: 768px) {
+  .switcher {
+    right: 24px;
+    bottom: 24px;
+  }
+}

@@ -1,0 +1,22 @@
+scaffold: onex
+version: v1
+metadata:
+  modulePath: github.com/onexstack/shop-app
+  shortDescription: "Shop App - 电商后端服务（用户登录注册 + MariaDB 存储）"
+  longMessage: "基于 OneX 技术栈脚手架生成的电商后端项目，含用户登录注册模块。缓存层（Redis）后续迭代补充。"
+  author: "mungdong"
+  email: "mungdong@example.com"
+  deploymentMethod: docker
+  makefileMode: unstructured
+  image:
+    registryPrefix: docker.io/mungdong
+    dockerfileMode: combined
+webServers:
+  - binaryName: shop-apiserver
+    webFramework: gin
+    storageType: mariadb
+    withHealthz: true
+    withUser: true
+    withOTel: false
+    withWS: false
+    serviceRegistry: none
